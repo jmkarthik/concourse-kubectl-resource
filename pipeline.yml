@@ -2,14 +2,16 @@ resource_types:
 - name: ckr
   type: docker-image
   source: 
-    repository: jmkarthik/ckr5
+    repository: jmkarthik/ckr6
     tag: latest
 
 resources:
 - name: my-ckr
   type: ckr
   source:
-    token: token1
+    api_server_uri: uri1
+    user_name: user1
+    password: pwd
 
 jobs:
 - name: my-ckr-job
