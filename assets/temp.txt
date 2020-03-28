@@ -1,0 +1,1 @@
+'{"source": {"api_server_uri": "http://k8s.com", "user_name": "uname", "password": "pwd1"}}'

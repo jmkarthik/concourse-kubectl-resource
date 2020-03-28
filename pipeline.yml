@@ -18,3 +18,5 @@ jobs:
   plan:
   - get: my-ckr
   - put: my-ckr
+    params:
+      file: "/opt/res/abc.txt"
