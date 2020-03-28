@@ -6,6 +6,13 @@ resource_types:
     tag: latest
 
 resources:
+
+- name: resGit
+  type: git
+  source:
+    uri: https://github.com/jmkarthik/concourse-kubectl-resource.git
+    branch: master
+
 - name: my-ckr
   type: ckr
   source:
@@ -17,7 +24,8 @@ resources:
 jobs:
 - name: my-ckr-job
   plan:
+  - get: resGit
   - get: my-ckr
   - put: my-ckr
     params:
-      file: "/opt/res/abc.txt"
+      file: "resGit/sample.yml"
