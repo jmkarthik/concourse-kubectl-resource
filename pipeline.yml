@@ -10,6 +10,7 @@ resources:
   type: ckr
   source:
     api_server_uri: uri1
+    namespace: nspace
     user_name: user1
     password: pwd
 
