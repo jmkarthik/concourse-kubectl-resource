@@ -28,9 +28,6 @@ kubectl config use-context $context >&2
 
 # kubectl config view >&2
 
-cat $basePath$file >&2
-
-cat /etc/resolv.conf >&2
 
 kubectl apply -f $basePath$file >&2
 
