@@ -16,8 +16,10 @@ resources:
 - name: my-ckr
   type: ckr
   source:
-    api_server_uri: uri1
-    namespace: nspace
+    api_server_uri: {{server}}
+    namespace: {{namespace}}
+    certificate_authority_data: {{cad}}
+    token: {{token}}
     user_name: user1
     password: pwd
 

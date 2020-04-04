@@ -1,6 +1,6 @@
 FROM alpine
 
-#Install k8s
+# Reduce number of layers
 
 RUN apk add jq
 
