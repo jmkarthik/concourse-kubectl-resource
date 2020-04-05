@@ -6,5 +6,5 @@ exec 3>&1
 exec 1>&2
 
 echo 'Starting to check'
-echo [{\"value\": \"na\"}]
+echo [{\"value\": \"na\"}] >&3
 echo 'Check completed'

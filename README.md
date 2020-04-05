@@ -62,3 +62,38 @@ PUT configuration to apply files in a folder
   params:
     file: "resGit/
 ```
+
+### Sample Pipeline yml
+
+```yaml
+resource_types:
+- name: ckr
+  type: docker-image
+  source: 
+    repository: jmkarthik/concourse-kubectl-resource
+    tag: latest
+
+resources:
+
+- name: resGit
+  type: git
+  source:
+    uri: https://github.com/jmkarthik/app-sample.git
+    branch: master
+
+- name: my-ckr
+  type: ckr
+  source:
+    api_server_uri: {{server}}
+    namespace: {{namespace}}
+    certificate_authority_data: {{cad}}
+    token: {{token}}
+
+jobs:
+- name: my-ckr-job
+  plan:
+  - get: resGit
+  - put: my-ckr
+    params:
+      file: "resGit/deployment-1.yml"
+```

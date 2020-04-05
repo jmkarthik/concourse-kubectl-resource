@@ -1,3 +1,3 @@
 cd..
-docker build -t jmkarthik/ckr6 .
-docker push jmkarthik/ckr6
+docker build -t jmkarthik/concourse-kubectl-resource .
+docker push jmkarthik/concourse-kubectl-resource

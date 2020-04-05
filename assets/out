@@ -100,11 +100,10 @@ kubectl config unset users.$uname
 echo '=======kubectl configuration cleared'
 echo
 
-outJson='{"version": { "value": "na"}, "metadata": [{ "name": "Cluster URI", "value": "uri-value"},
+outJson='{"version": { "value": "na"}, "metadata": [
         { "name": "File / Folder applied", "value": "file-value"}
         ]}'
 
-outJson=$(echo $outJson | sed s~uri-value~$uri~g)
 outJson=$(echo $outJson | sed s~file-value~$file~g)
 echo $outJson >&3
 echo
