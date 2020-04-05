@@ -1,3 +1,4 @@
 call buildPushDocker.bat
-sleep 5000
+TIMEOUT /T 5 /NOBREAK
+cd devFiles
 call recreateConcourseJob.bat

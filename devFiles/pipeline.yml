@@ -10,7 +10,7 @@ resources:
 - name: resGit
   type: git
   source:
-    uri: https://github.com/jmkarthik/concourse-kubectl-resource.git
+    uri: https://github.com/jmkarthik/app-sample.git
     branch: master
 
 - name: my-ckr
@@ -20,14 +20,12 @@ resources:
     namespace: {{namespace}}
     certificate_authority_data: {{cad}}
     token: {{token}}
-    user_name: user1
-    password: pwd
 
 jobs:
 - name: my-ckr-job
   plan:
   - get: resGit
-  - get: my-ckr
   - put: my-ckr
     params:
-      file: "resGit/sample.yml"
+      file: "resGit/deployment-1.yml"
+  

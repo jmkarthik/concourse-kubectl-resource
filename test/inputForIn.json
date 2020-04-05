@@ -1,0 +1,11 @@
+{
+    "source": {
+        "api_server_uri": "uri",
+        "namespace": "ns",
+        "certificate_authority_data": "cadata",
+        "token": "token"
+    },
+    "version": {
+        "value": "1234"
+    }
+}

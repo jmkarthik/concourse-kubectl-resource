@@ -1,0 +1,1 @@
+cat .\test\inputForOut.json | docker run --rm --interactive jmkarthik/ckr6 /opt/resource/out

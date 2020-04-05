@@ -1,0 +1,1 @@
+cat .\test\inputForIn.json | docker run --rm --interactive jmkarthik/ckr6 /opt/resource/in

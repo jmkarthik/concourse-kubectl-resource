@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+
+set -e
+
+# GET not applicable
+echo '{"version": { "value": "na"}}'

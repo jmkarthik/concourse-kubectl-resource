@@ -1,0 +1,11 @@
+{
+    "source": {
+        "api_server_uri": "asdfasdf",
+        "namespace": "ns",
+        "certificate_authority_data": "YXNkZgo=",
+        "token": "YXNkZgo="
+    },
+    "params": {
+        "file": "gitRes/"
+    }
+}

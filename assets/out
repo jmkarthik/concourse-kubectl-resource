@@ -1,0 +1,115 @@
+#!/usr/bin/env sh
+
+set -e
+
+exec 3>&1
+exec 1>&2
+
+invalidSourceParams()
+{
+    echo
+    echo 'Valid source / params details were not provided'
+    exit 1
+}
+
+validateEmpty()
+{
+    if [[ -z "$2" ]] || [[ "$2" == null ]]; then
+        echo "$1 was not provided"
+        invalidSourceParams
+    fi
+}
+
+validateBase64()
+{
+    echo $1 | base64 -d 2>/dev/null >&0
+    isBase64Err=$?
+    if [ $isBase64Err -ne 0 ]; then
+        echo "$2 is not a valid base64 value"
+        invalidSourceParams
+    fi
+}
+
+echo '=======Starting PUT'
+echo
+
+data=$(cat -)
+
+echo '=======Parsing source and params...'
+uri=$(echo $data | jq --raw-output .source.api_server_uri)
+namespace=$(echo $data | jq -r .source.namespace)
+certificate_authority_data=$(echo $data | jq -r .source.certificate_authority_data)
+token=$(echo $data | jq -r .source.token)
+
+file=$(echo $data | jq -r .params.file)
+echo '=======source and params parsed'
+echo
+
+basePath="/tmp/build/put/"
+
+cluster=cluster1
+context=context1
+uname=name1
+
+echo '=======Validating source details...'
+
+validateEmpty "Cluster API Server URI" $uri
+
+validateEmpty "Cluster namespace" $namespace
+
+validateEmpty "Certificate authority data" $certificate_authority_data
+
+validateBase64 $certificate_authority_data "Certificate authority data"
+
+validateEmpty "Token" $token
+
+echo '=======source details validated'
+echo
+
+echo '=======Validating params...'
+validateEmpty "file" $file
+
+if [[ ! -f $basePath$file ]] && [[ ! -d $basePath$file ]]; then
+    echo "Valid file / folder was not provided"
+    invalidSourceParams
+fi
+
+echo '=======params validated'
+echo
+
+echo '=======Configuring kubectl to connect to the target Kubernetes cluster...'
+kubectl config set-cluster $cluster --server=$uri
+kubectl config set-context $context --cluster=$cluster --user=$uname --namespace=$namespace
+
+kubectl config set clusters.$cluster.certificate-authority-data $certificate_authority_data
+kubectl config set-credentials $uname --token=$token
+
+kubectl config use-context $context
+echo '=======kubectl configured'
+echo
+
+echo '=======Applying file(s) configured using kubectl...'
+kubectl apply -f $basePath$file
+echo '=======File(s) applied using kubectl'
+echo
+
+echo '=======Clearing kubectl configuration...'
+kubectl config unset contexts.$context
+kubectl config unset clusters.$cluster
+kubectl config unset users.$uname
+echo '=======kubectl configuration cleared'
+echo
+
+outJson='{"version": { "value": "na"}, "metadata": [{ "name": "Cluster URI", "value": "uri-value"},
+        { "name": "File / Folder applied", "value": "file-value"}
+        ]}'
+
+outJson=$(echo $outJson | sed s~uri-value~$uri~g)
+outJson=$(echo $outJson | sed s~file-value~$file~g)
+echo $outJson >&3
+echo
+
+echo "=======PUT completed"
+
+
+
