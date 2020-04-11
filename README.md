@@ -1,5 +1,5 @@
 # Kubectl resource
-Applies files to a Kubernetes cluster using kubectl
+Deploys resources to a Kubernetes cluster using "kubectl apply -f" command
 
 ## SourceConfiguration
 
